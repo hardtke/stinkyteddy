@@ -1,0 +1,8 @@
+bin/*
+dist/*
+docs/*
+*~
+run
+semantic.cache
+build.properties
+

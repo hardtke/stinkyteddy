@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="jars"
+         name="stinkyteddy">
+
+  <!-- settable properties -->
+  <property file="build.properties"/>
+  <property name="project.home" value="."/>
+  <property name="jar.name" value="stinkyteddy.jar"/>  
+
+  <!-- internal properties -->
+  <property name="src.dir" value="${project.home}/src"/>
+  <property name="bin.dir" value="${project.home}/bin"/>
+  <property name="lib.dir" value="${project.home}/lib"/>
+  <property name="dist.dir" value="${project.home}/dist"/>
+  <property name="web.dir" value="${project.home}/WebContent"/>
+
+  <!-- get system variables -->
+  <property environment="env"/>
+
+  <!-- build path -->
+  <path id="build.path">
+    <pathelement path="${classpath}"/>
+    <fileset dir="${lib.dir}">
+      <include name="**/*.jar"/>
+    </fileset>
+  </path>
+
+  <!-- targets -->
+  <target name="init">
+    <tstamp/>
+  </target>
+
+  <target name="clean" depends="distclean">
+    <delete dir="${bin.dir}"/>
+  </target>
+
+  <target name="distclean">
+    <delete dir="${dist.dir}"/>
+  </target>
+
+  <target name="compile" depends="init">
+    <mkdir dir="${bin.dir}"/>
+    <javac srcdir="${src.dir}"
+           destdir="${bin.dir}"
+           debug="true" debuglevel="lines">
+      <classpath refid="build.path"/>
+    </javac>
+  </target>
+
+
+
+
+  <target name="jars" depends="compile">
+    <mkdir dir="${dist.dir}"/>
+    <jar destfile="${dist.dir}/${jar.name}"
+         filesetmanifest="mergewithoutmain">
+      <manifest>
+        <attribute name="Class-Path" value="."/>
+      </manifest>
+      <fileset dir="${project.home}/bin"/>
+        <zipfileset excludes="META-INF/*.SF"
+                    src="${lib.dir}/lucene-core-3.1-dev.jar"/>
+    </jar>
+  </target>
+
+
+    <target name="javadoc">
+     <mkdir  dir="${project.home}/docs"/>
+       <javadoc access="public" author="true" classpath="lib/org.json.jar"
+destdir="${project.home}/docs" nodeprecated="false" nodeprecatedlist="false" noindex="false"
+nonavbar="false" notree="false" packagenames="com.stinkyteddy.utils,com" source="1.6" sourcepath="src:lib" splitindex="true" use="true" version="true"/>
+    </target>
+
+</project>

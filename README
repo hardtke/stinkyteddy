@@ -1,0 +1,17 @@
+This repository contains some utilities used by the Stinky Teddy search engine
+(http://www.stinkyteddy.com).  These are written in java.  
+
+You'll need the Lucene core library for the org.apache.lucene.document.DateTools class.  
+
+To build the jar, check out from git and do:
+
+ant
+
+The jar file will be in the dist directory.  
+
+There is a utility called com.stinkyteddy.utils.StDateUtils that parses many 
+common string representations of dates.  To use:
+
+Date d = StDateUtils.parseDateString(string);
+ 
+where Date is java.util.Date.
